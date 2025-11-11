@@ -4,8 +4,8 @@ import { Edit2, Plus, X, Save, Search, Filter, Star, Package, DollarSign, Tag, P
 import { useUser } from '../components/userContext';
 import { useRouter } from 'next/navigation';
 
-const API_URL = 'https://-back.vercel.app/api/productos';
-const API_VENDEDOR = 'https://-back.vercel.app/api/productos-vendedor';
+const API_URL = 'https://europadel-back.vercel.app/api/productos';
+const API_VENDEDOR = 'https://europadel-back.vercel.app/api/productos-vendedor';
 
 interface ProductoForm {
     productoAdminId?: string;
