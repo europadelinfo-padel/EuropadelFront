@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { FaWhatsapp, FaSearch, FaArrowLeft, FaStar, FaFilter, FaShoppingCart } from 'react-icons/fa';
 import styles from '../stylesPage/page.module.css';
 
-const API_URL = 'https://-back.vercel.app/api/productos-publicos';
+const API_URL = 'https://europadel-back.vercel.app/api/productos-publicos';
 
 interface Producto {
   _id: string;
