@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Edit2, Trash2, Plus, X, Save, Search, Filter, Star, Package, DollarSign, Tag } from 'lucide-react';
 
-const API_URL = 'https://-back.vercel.app/api/productos';
+const API_URL = 'https://europadel-back.vercel.app/api/productos';
 
 interface ProductoForm {
   _id?: string;
