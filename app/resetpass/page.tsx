@@ -56,7 +56,7 @@ export default function PasswordRecovery() {
         setMessage(null);
 
         try {
-            const response = await fetch('https://-back.vercel.app/api/auth/recover-password', {
+            const response = await fetch('https://europadel-back.vercel.app/api/auth/recover-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export default function PasswordRecovery() {
                 return;
             }
 
-            const response = await fetch('https://-back.vercel.app/api/auth/reset-password', {
+            const response = await fetch('https://europadel-back.vercel.app/api/auth/reset-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -299,4 +299,5 @@ export default function PasswordRecovery() {
             </div>
         </div>
     );
+
 }
