@@ -14,7 +14,7 @@ const poppins = Poppins({
 
 
 export const metadata: Metadata = {
-  title: "Casa de Deportes - Sistema de Gestión",
+  title: "Euro Padel - Sistema de Gestión",
   description: "Sistema de gestión de productos para casa de deportes",
   keywords: "deportes, gestión, inventario, productos",
   icons: {
