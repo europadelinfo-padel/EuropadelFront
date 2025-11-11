@@ -7,7 +7,7 @@ import styles from './stylesPage/page.module.css';
 import Footer from './components/Footer';
 
 // ✅ CAMBIO CRÍTICO: Cambiar la URL a productos públicos solo
-const API_URL = 'https://-back.vercel.app/api/productos-publicos';
+const API_URL = 'https://europadel-back.vercel.app/api/productos-publicos';
 
 interface Producto {
   _id: string;
