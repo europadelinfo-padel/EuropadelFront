@@ -4,7 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Download, Package, Search, ChevronLeft, ChevronRight, Filter, RefreshCw, AlertCircle } from 'lucide-react';
 import { useUser } from '../../components/userContext'; // ✅ Importar el hook del contexto
 
-const API_URL = 'https://-back.vercel.app/api';
+const API_URL = 'https://europadel-back.vercel.app/api';
 
 interface Recargos {
   transporte?: number;
