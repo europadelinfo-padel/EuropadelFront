@@ -1897,16 +1897,46 @@ tr:nth-child(even) {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                  <button onClick={downloadExcel} className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-md text-sm">
-                    <Download size={18} />Excel
+                   <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  <button
+                    onClick={downloadExcel}
+                    className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-md text-sm"
+                  >
+                    <Download size={18} /> Excel
                   </button>
-                  <button onClick={downloadWord} className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md text-sm">
-                    <Download size={18} />Word
+
+                  <button
+                    onClick={downloadWord}
+                    className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md text-sm"
+                  >
+                    <Download size={18} /> Word
                   </button>
-                  <button onClick={downloadPDF} className="flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md text-sm">
-                    <Download size={18} />PDF
+
+                  <button
+                    onClick={downloadPDF}
+                    className="flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md text-sm"
+                  >
+                    <Download size={18} /> PDF
                   </button>
+
+                  {/* Botón según el rol */}
+                  {user.rol === "admin" && (
+                    <button
+                      onClick={() => window.location.href = "/vendedoractivo"}
+                      className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors shadow-md text-sm"
+                    >
+                      Vendedor Activo
+                    </button>
+                  )}
+
+                  {user.rol === "vendedor" && (
+                    <button
+                      onClick={() => window.location.href = "/vendedoractivo"}
+                      className="flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-md text-sm"
+                    >
+                      Editar Perfil
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -2014,3 +2044,4 @@ tr:nth-child(even) {
 };
 
 export default InventoryDashboard;
+
