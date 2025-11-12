@@ -273,17 +273,6 @@ const VendedorActivoPage: React.FC = () => {
               <ShoppingCart size={40} className="opacity-50" />
             </div>
           </div>
-          <div className="bg-gradient-to-br from-orange-500 to-orange-700 rounded-xl p-6 text-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-orange-100 text-sm">Congelados</p>
-                <p className="text-3xl font-bold">
-                  {vendedores.filter(v => v.isFrozen).length}
-                </p>
-              </div>
-              <Snowflake size={40} className="opacity-50" />
-            </div>
-          </div>
         </div>
 
         {/* Grid de Vendedores 3x3 */}
@@ -311,21 +300,7 @@ const VendedorActivoPage: React.FC = () => {
                     }`}>
                       {vendedor.nombre.charAt(0).toUpperCase()}
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold text-center ${
-                        vendedor.rol === 'vendedor' 
-                          ? 'bg-green-600 text-white' 
-                          : 'bg-gray-600 text-white'
-                      }`}>
-                        {vendedor.rol}
-                      </span>
-                      {vendedor.isFrozen && (
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white flex items-center gap-1 justify-center">
-                          <Snowflake size={12} />
-                          Congelado
-                        </span>
-                      )}
-                    </div>
+                    
                   </div>
 
                   {/* Info del vendedor */}
@@ -352,32 +327,8 @@ const VendedorActivoPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Mensaje si está congelado */}
-                  {vendedor.isFrozen && (
-                    <div className="mb-4 bg-blue-500/20 border border-blue-400 rounded-lg p-2 flex items-center gap-2">
-                      <AlertCircle className="text-blue-400 flex-shrink-0" size={14} />
-                      <p className="text-blue-200 text-xs">
-                        No puede subir productos
-                      </p>
-                    </div>
-                  )}
-
                   {/* Acciones */}
                   <div className="space-y-2">
-                    {/* Toggle Freeze */}
-                    <button
-                      onClick={() => toggleFreeze(vendedor._id)}
-                      disabled={procesando[vendedor._id]}
-                      className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all ${
-                        vendedor.isFrozen
-                          ? 'bg-orange-600 hover:bg-orange-700 text-white'
-                          : 'bg-blue-600 hover:bg-blue-700 text-white'
-                      } disabled:opacity-50 disabled:cursor-not-allowed`}
-                    >
-                      {vendedor.isFrozen ? <Sun size={16} /> : <Snowflake size={16} />}
-                      {vendedor.isFrozen ? 'Descongelar' : 'Congelar'}
-                    </button>
-
                     {/* Cambiar Rol */}
                     <button
                       onClick={() => cambiarRol(
