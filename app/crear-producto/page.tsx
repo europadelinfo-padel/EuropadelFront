@@ -1576,7 +1576,6 @@ export default function VendedorProductos() {
                 }
             }
         } catch (error) {
-            alert('❌ Error al sincronizar productos. Verifica tu conexión.');
         } finally {
             setSincronizando(false);
             await cargarProductosAdmin();
@@ -2689,3 +2688,4 @@ export default function VendedorProductos() {
         </div>
     );
 }
+
