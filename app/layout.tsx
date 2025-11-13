@@ -14,14 +14,14 @@ const poppins = Poppins({
 
 
 export const metadata: Metadata = {
-  title: "Euro Padel - Sistema de Gestión",
+  title: "EuroPadel - Sistema de Gestión",
   description: "Sistema de gestión de productos para casa de deportes",
   keywords: "deportes, gestión, inventario, productos",
   icons: {
     icon: "/assets/europadel2.jpg", // 🔹 Este es el favicon que aparece en la pestaña
   },
   openGraph: {
-    title: "Euro Padel - Sistema de Gestión",
+    title: "EuroPadel - Sistema de Gestión",
     description: "Sistema de gestión de productos para casa de deportes",
     images: [
       {
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Euro Padel - Sistema de Gestión",
+    title: "EuroPadel - Sistema de Gestión",
     description: "Sistema de gestión de productos para casa de deportes",
     images: ["/assets/europadel.jpg"],
   },
