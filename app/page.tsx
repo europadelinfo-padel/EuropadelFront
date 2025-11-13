@@ -192,7 +192,7 @@ export default function HomePage() {
         </div>
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>Euro Padel</h1>
+          <h1 className={styles.heroTitle}>EuroPadel</h1>
           <p className={styles.heroSubtitle}>EL PUNTO DECISIVO EMPIEZA AQUÍ</p>
           <div className={styles.heroStats}>
             <div className={styles.stat}><FaStar className={styles.statIcon} /><span>Nuestros clientes nos siguen eligiendo</span></div>
