@@ -62,7 +62,7 @@ interface NotificacionResponse {
 const initialForm: ProductoAdminForm = {
     codigo: '', nombre: '', marca: '', descripcion: '', precioAdminFijo: '', stock: '0',
     moneda: 'ARS', imagen: '', imagenUrl: '', categoria: 'pelota',
-    destacado: false, whatsappAdmin: '+54 341 355 9329',
+    destacado: false, whatsappAdmin: '+34 602 65 72 38',
 };
 
 export default function AdminProductosFijo() {
@@ -884,3 +884,4 @@ export default function AdminProductosFijo() {
         </div>
     );
 }
+
