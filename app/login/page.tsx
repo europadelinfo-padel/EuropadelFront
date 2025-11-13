@@ -114,7 +114,7 @@ export default function Login() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full text-black px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -126,7 +126,7 @@ export default function Login() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full text-black px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <span
               className="absolute right-3 top-2.5 cursor-pointer"
@@ -157,3 +157,4 @@ export default function Login() {
     </div>
   );
 }
+
