@@ -102,7 +102,7 @@ export default function Login() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 via-purple-50 to-white">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">🔐 Iniciar Sesión</h2>
+        <h2 className="text-2xl font-bold mb-6 text-black text-center">🔐 Iniciar Sesión</h2>
         <form onSubmit={handleSubmit}>
           {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
 
@@ -157,4 +157,5 @@ export default function Login() {
     </div>
   );
 }
+
 
