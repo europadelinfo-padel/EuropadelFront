@@ -1485,12 +1485,6 @@
 // }
 
 
-
-
-
-
-
-
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { Edit2, Plus, X, Save, Search, Filter, Star, Package, DollarSign, Tag, Phone, AlertCircle, Trash2, RefreshCw } from 'lucide-react';
@@ -1513,7 +1507,7 @@ interface ProductoForm {
     descuento: string;
     imagen: string;
     imagenUrl: string;
-    categoria: 'pelota' | 'ropa' | 'accesorio';
+    categoria: 'paleta' | 'ropa' | 'accesorio';
     destacado: boolean;
     whatsapp: string;
     recargoTransporte: string;
@@ -1537,7 +1531,7 @@ interface Producto {
     moneda: 'ARS' | 'USD';
     descuento: number;
     imagenUrl: string;
-    categoria: 'pelota' | 'ropa' | 'accesorio';
+    categoria: 'paleta' | 'ropa' | 'accesorio';
     destacado: boolean;
     whatsapp: string;
     recargos: {
@@ -1567,7 +1561,7 @@ interface Filtros {
 
 const initialForm: ProductoForm = {
     codigo: '', nombre: '', marca: '', descripcion: '', precioAdminFijo: '', precioFinal: 0, stock: '0',
-    moneda: 'ARS', descuento: '0', imagen: '', imagenUrl: '', categoria: 'pelota',
+    moneda: 'ARS', descuento: '0', imagen: '', imagenUrl: '', categoria: 'paleta',
     destacado: false, whatsapp: '', recargoTransporte: '0', recargoMargen: '0', recargoOtros: '0',
 };
 
@@ -2506,7 +2500,7 @@ export default function VendedorProductos() {
                                     required
                                     className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-500 transition text-sm text-gray-900"
                                 >
-                                    <option value="pelota">⚽ Pelota</option>
+                                    <option value="paleta">⚽ paleta</option>
                                     <option value="ropa">👕 Ropa</option>
                                     <option value="accesorio">🎒 Accesorio</option>
                                 </select>
@@ -2740,7 +2734,7 @@ export default function VendedorProductos() {
                                 className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-500 transition text-sm text-gray-900"
                             >
                                 <option value="todos">Todas las categorías</option>
-                                <option value="pelota">⚽ Pelotas</option>
+                                <option value="paleta">⚽ paletas</option>
                                 <option value="ropa">👕 Ropa</option>
                                 <option value="accesorio">🎒 Accesorios</option>
                             </select>
