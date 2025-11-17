@@ -886,6 +886,8 @@
 // }
 
 
+                   
+
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { Edit2, Trash2, Plus, X, Save, Search, Filter, Star, Package, DollarSign, Tag, Send, RefreshCw } from 'lucide-react';
@@ -906,7 +908,7 @@ interface ProductoAdminForm {
     moneda: 'ARS' | 'USD';
     imagen: string;
     imagenUrl: string;
-    categoria: 'pelota' | 'ropa' | 'accesorio';
+    categoria: 'paleta' | 'ropa' | 'accesorio';
     destacado: boolean;
     whatsappAdmin: string;
 }
@@ -921,7 +923,7 @@ interface ProductoAdmin {
     precioAdminFijo: number;
     moneda: 'ARS' | 'USD';
     imagenUrl: string;
-    categoria: 'pelota' | 'ropa' | 'accesorio';
+    categoria: 'paleta' | 'ropa' | 'accesorio';
     destacado: boolean;
     whatsappAdmin: string;
     createdAt: string;
@@ -954,7 +956,7 @@ interface NotificacionResponse {
 
 const initialForm: ProductoAdminForm = {
     codigo: '', nombre: '', marca: '', descripcion: '', precioAdminFijo: '', stock: '0',
-    moneda: 'ARS', imagen: '', imagenUrl: '', categoria: 'pelota',
+    moneda: 'ARS', imagen: '', imagenUrl: '', categoria: 'paleta',
     destacado: false, whatsappAdmin: '+34 602 65 72 38',
 };
 
@@ -1380,7 +1382,7 @@ export default function AdminProductosFijo() {
                                 required
                                 className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl outline-none focus:border-purple-500 transition text-sm text-gray-900"
                             >
-                                <option value="pelota">⚽ Pelota</option>
+                                <option value="paleta">⚽ paleta</option>
                                 <option value="ropa">👕 Ropa</option>
                                 <option value="accesorio">🎒 Accesorio</option>
                             </select>
@@ -1522,7 +1524,7 @@ export default function AdminProductosFijo() {
                                 className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl outline-none focus:border-purple-500 transition text-sm text-gray-900"
                             >
                                 <option value="todos">Todas las categorías</option>
-                                <option value="pelota">⚽ Pelotas</option>
+                                <option value="paleta">⚽ paletas</option>
                                 <option value="ropa">👕 Ropa</option>
                                 <option value="accesorio">🎒 Accesorios</option>
                             </select>
