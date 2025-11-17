@@ -1,6 +1,6 @@
 // "use client";
 // import { useState, useEffect, useRef } from 'react';
-// import { Edit2, Plus, X, Save, Search, Filter, Star, Package, DollarSign, Tag, Phone, AlertCircle, Trash2 } from 'lucide-react';
+// import { Edit2, Plus, X, Save, Search, Filter, Star, Package, DollarSign, Tag, Phone, AlertCircle, Trash2, RefreshCw } from 'lucide-react';
 // import { useUser } from '../components/userContext';
 // import { useRouter } from 'next/navigation';
 
@@ -56,7 +56,7 @@
 //     productoVendedor?: boolean;
 //     vendedorId?: string;
 //     productoAdminId?: string;
-//     yaPersonalizado?: boolean; // ✅ NUEVO campo
+//     yaPersonalizado?: boolean;
 //     createdAt: string;
 //     updatedAt: string;
 // }
@@ -80,11 +80,13 @@
 
 // export default function VendedorProductos() {
 //     const { user } = useUser();
+//     const router = useRouter();
 //     const [isAuth, setIsAuth] = useState<boolean>(false);
 //     const [login, setLogin] = useState<Login>({ id: '', email: '', password: '' });
 //     const [vendedorId, setVendedorId] = useState<string>('');
 //     const [error, setError] = useState<string>('');
 //     const [loading, setLoading] = useState<boolean>(false);
+//     const [sincronizando, setSincronizando] = useState<boolean>(false);
 //     const [form, setForm] = useState<ProductoForm>(initialForm);
 //     const [productosAdmin, setProductosAdmin] = useState<Producto[]>([]);
 //     const [misProductos, setMisProductos] = useState<Producto[]>([]);
@@ -97,7 +99,6 @@
 //     const [vistaActual, setVistaActual] = useState<'admin' | 'mis-productos'>('admin');
 //     const [whatsappVendedor, setWhatsappVendedor] = useState<string>('');
 //     const fileRef = useRef<HTMLInputElement>(null);
-//     const router = useRouter();
 
 //     useEffect(() => {
 //         if (sessionStorage.getItem('isAuthenticatedVendedor') === 'true') {
@@ -114,16 +115,12 @@
 //     }, [user]);
 
 //     useEffect(() => {
-//         console.log('🔄 useEffect de carga de productos ejecutado');
-//         console.log('🔐 isAuth:', isAuth);
-//         console.log('🆔 vendedorId:', vendedorId);
-
+      
 //         if (isAuth && vendedorId) {
-//             console.log('✅ Condiciones cumplidas, cargando productos...');
-//             cargarProductosAdmin();
-//             cargarMisProductos();
+//             console.log('✅ Condiciones cumplidas, sincronizando...');
+//             sincronizarProductos();
 //         } else {
-//             console.log('⚠️ No se cargan productos. isAuth:', isAuth, 'vendedorId:', vendedorId);
+//             console.log('⚠️ No se sincroniza. isAuth:', isAuth, 'vendedorId:', vendedorId);
 //         }
 //     }, [isAuth, vendedorId]);
 
@@ -131,26 +128,130 @@
 //         if (isAuth) calcular();
 //     }, [form.precioAdminFijo, form.descuento, form.recargoTransporte, form.recargoMargen, form.recargoOtros, isAuth]);
 
-//     const handleLogin = () => {
+
+
+//     const sincronizarManualmente = async () => {
+//         console.log('🔄 Sincronización manual solicitada');
+//         await sincronizarProductos();
+//         alert('✅ Sincronización completada');
+//     };
+
+
+//     // ============================================
+//     // 📁 VendedorProductos.tsx - LOGIN CON JWT REAL
+//     // ============================================
+
+//     // Modificar la función handleLogin para obtener un token real del backend:
+//     const handleLogin = async () => {
 //         console.log('🔑 Intentando login...');
 //         setLoading(true);
 //         setError('');
-//         if (login.id && login.email && login.password) {
-//             sessionStorage.setItem('isAuthenticatedVendedor', 'true');
-//             sessionStorage.setItem('vendedorToken', 'VENDEDOR_TOKEN_2024');
-//             sessionStorage.setItem('vendedorId', login.id);
-//             sessionStorage.setItem('vendedorWhatsapp', '+54 9 341 XXX XXXX');
 
-//             setTimeout(() => {
-//                 setLoading(false);
-//                 setIsAuth(true);
-//                 setVendedorId(login.id);
-//                 setWhatsappVendedor('+54 9 341 XXX XXXX');
-//                 console.log('🎉 Login exitoso! vendedorId establecido:', login.id);
-//             }, 500);
-//         } else {
+//         // Validación de campos
+//         if (!login.email || !login.password) {
 //             setLoading(false);
-//             setError('Por favor completa todos los campos');
+//             setError('Por favor completa email y contraseña');
+//             return;
+//         }
+
+//         try {
+         
+//             const response = await fetch('https://europadel-back.vercel.app/api/auth/login', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify({
+//                     email: login.email,
+//                     password: login.password
+//                 })
+//             });
+//             if (!response.ok) {
+//                 const errorData = await response.json();
+//                 throw new Error(errorData.message || 'Error en el login');
+//             }
+
+//             const data = await response.json();
+
+
+//             if (!data.success) {
+//                 throw new Error(data.message || 'Error en el login');
+//             }
+
+//             // 🔍 Detectar la estructura correcta
+//             let usuario;
+//             let token;
+
+//             // Opción 1: data.data existe (formato esperado)
+//             if (data.data) {
+//                 usuario = data.data;
+//                 token = data.token || data.data.token;
+//                 console.log('✅ Usando estructura: data.data');
+//             }
+//             // Opción 2: data.usuario existe (formato alternativo)
+//             else if (data.usuario) {
+//                 usuario = data.usuario;
+//                 token = data.token;
+//                 console.log('✅ Usando estructura: data.usuario');
+//             }
+//             // Opción 3: data.user existe ← AGREGADO
+//             else if (data.user) {
+//                 usuario = data.user;
+//                 token = data.token;
+//                 console.log('✅ Usando estructura: data.user');
+//             }
+//             // Opción 4: datos directamente en data
+//             else {
+//                 usuario = data;
+//                 token = data.token;
+//                 console.log('✅ Usando estructura: data directamente');
+//             }
+
+//             // Validaciones
+//             if (!usuario) {
+//                 throw new Error('No se recibieron datos del usuario');
+//             }
+
+//             if (!token) {
+//                 throw new Error('No se recibió token del servidor');
+//             }
+
+//             // Verificar que el token NO sea el de desarrollo
+//             if (token === 'VENDEDOR_TOKEN_2024' || token.includes('VENDEDOR_TOKEN')) {
+//                 throw new Error('Token de desarrollo detectado. Contacta al administrador.');
+//             }
+
+//             // Verificar que el usuario sea vendedor
+//             if (usuario.rol !== 'vendedor') {
+//                 throw new Error(`Este usuario tiene rol "${usuario.rol}", no "vendedor"`);
+//             }
+
+//             // Normalizar ID (puede venir como id o _id)
+//             const userId = usuario.id || usuario._id;
+
+//             if (!userId) {
+//                 throw new Error('No se recibió ID del usuario');
+//             }
+
+//             sessionStorage.setItem('isAuthenticatedVendedor', 'true');
+//             sessionStorage.setItem('vendedorToken', token);
+//             sessionStorage.setItem('vendedorId', userId);
+//             sessionStorage.setItem('vendedorWhatsapp', usuario.whatsapp || '+54 9 341 XXX XXXX');
+
+//             setIsAuth(true);
+//             setVendedorId(userId);
+//             setWhatsappVendedor(usuario.whatsapp || '+54 9 341 XXX XXXX');
+
+//             console.log('🎉 Login exitoso! Iniciando sincronización...');
+
+//         } catch (err) {
+//             console.error('❌ Error completo en login:', err);
+//             console.error('Stack trace:', err instanceof Error ? err.stack : 'No disponible');
+
+//             const errorMessage = err instanceof Error ? err.message : 'Error desconocido en el login';
+//             setError(errorMessage);
+//         } finally {
+//             setLoading(false);
 //         }
 //     };
 
@@ -164,90 +265,6 @@
 //         reset();
 //     };
 
-
-//     const cargarProductosAdmin = async () => {
-//         console.log('🔍 Cargando productos del admin...');
-//         try {
-//             const res = await fetch(API_URL, {
-//                 headers: { 'Authorization': `Bearer ${sessionStorage.getItem('vendedorToken')}` }
-//             });
-//             const data = await res.json();
-//             console.log('📦 Respuesta productos admin:', data);
-
-//             if (data.success) {
-//                 // ✅ Obtener productos ya personalizados por este vendedor
-//                 const resPersonalizados = await fetch(
-//                     `${API_VENDEDOR}?vendedorId=${vendedorId}`,
-//                     { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('vendedorToken')}` } }
-//                 );
-//                 const dataPersonalizados = await resPersonalizados.json();
-
-//                 // IDs de productos admin que ya personalizó
-//                 const idsPersonalizados = dataPersonalizados.success
-//                     ? dataPersonalizados.data
-//                         .filter((p: Producto) => p.productoAdminId)
-//                         .map((p: Producto) => p.productoAdminId)
-//                     : [];
-
-//                 console.log('🔍 IDs ya personalizados:', idsPersonalizados);
-
-//                 // ✅ Mostrar TODOS los productos admin
-//                 // Pero marcar visualmente los que ya personalizó
-//                 const productosDisponibles = data.data.filter((p: Producto) => {
-//                     return p.productoAdmin === true;
-//                 }).map((p: Producto) => ({
-//                     ...p,
-//                     yaPersonalizado: idsPersonalizados.includes(p._id || p.id)
-//                 }));
-
-//                 console.log('✅ Productos admin disponibles:', productosDisponibles.length);
-//                 setProductosAdmin(productosDisponibles);
-//             }
-//         } catch (e) {
-//             console.error('❌ Error al cargar productos admin:', e);
-//         }
-//     };
-
-//     const cargarMisProductos = async () => {
-//         console.log('🔍 Cargando MIS productos...');
-//         console.log('🆔 Vendedor ID actual:', vendedorId);
-//         try {
-//             const url = `${API_VENDEDOR}?vendedorId=${vendedorId}`;
-//             console.log('🌐 URL de petición:', url);
-
-//             const res = await fetch(url, {
-//                 headers: { 'Authorization': `Bearer ${sessionStorage.getItem('vendedorToken')}` }
-//             });
-//             const data = await res.json();
-//             console.log('📦 Respuesta mis productos:', data);
-
-//             if (data.success) {
-//                 // ✅ FILTRO CORRECTO: Solo productos del vendedor actual
-//                 const misProductosVendedor = data.data.filter((p: Producto) => {
-//                     // Verificar que sea producto del vendedor Y que el vendedorId coincida
-//                     const esDelVendedor =
-//                         p.productoAdmin === false &&
-//                         p.productoVendedor === true &&
-//                         p.vendedorId === vendedorId;
-
-//                     console.log(`📊 Producto ${p.nombre}:`, {
-//                         productoAdmin: p.productoAdmin,
-//                         productoVendedor: p.productoVendedor,
-//                         vendedorId: p.vendedorId,
-//                         vendedorIdActual: vendedorId,
-//                         esDelVendedor
-//                     });
-
-//                     return esDelVendedor;
-//                 });
-
-//                 console.log('✅ Mis productos filtrados:', misProductosVendedor.length);
-//                 setMisProductos(misProductosVendedor);
-//             }
-//         } catch (e) {
-//             console.error('❌ Error al cargar mis productos:', e);
-//         }
-//     };
 
 //     const calcular = () => {
 //         const precioBase = parseFloat(form.precioAdminFijo) || 0;
@@ -286,12 +303,275 @@
 //         };
 //         reader.readAsDataURL(file);
 //     };
+
+//     const obtenerToken = (): string | null => {
+//         const token = sessionStorage.getItem('vendedorToken');
+
+//         if (!token) {
+//             console.error('❌ No hay token en sessionStorage');
+//             return null;
+//         }
+
+//         // Verificar que NO sea el token de desarrollo
+//         if (token === 'VENDEDOR_TOKEN_2024') {
+//             console.error('❌ Token de desarrollo detectado. Debes hacer login nuevamente.');
+//             alert('⚠️ Token inválido. Por favor, cierra sesión e inicia sesión nuevamente.');
+//             return null;
+//         }
+
+//         console.log('✅ Token válido encontrado:', token.substring(0, 20) + '...');
+//         return token;
+//     };
+
+//     // ============================================
+//     // Reemplazar la función sincronizarProductos:
+//     // ============================================
+
+//     const sincronizarProductos = async () => {
+//         console.log('🔄 Iniciando sincronización de productos...');
+//         setSincronizando(true);
+
+//         try {
+//             const token = obtenerToken();
+
+//             if (!token) {
+//                 console.error('❌ No se puede sincronizar sin token válido');
+//                 setSincronizando(false);
+//                 return;
+//             }
+
+//             const resSincronizar = await fetch(`${API_VENDEDOR}/sincronizar`, {
+//                 method: 'POST',
+//                 headers: {
+//                     'Authorization': `Bearer ${token}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             });
+
+//             console.log('📥 Status de respuesta:', resSincronizar.status);
+
+//             if (!resSincronizar.ok) {
+//                 const errorText = await resSincronizar.text();
+//                 console.error('❌ Error en sincronización:', errorText);
+//                 throw new Error(`Error ${resSincronizar.status}: ${errorText}`);
+//             }
+
+//             const dataSincronizar = await resSincronizar.json();
+//             console.log('✅ Respuesta de sincronización:', dataSincronizar);
+
+//             if (dataSincronizar.success) {
+//                 console.log('✅ Sincronización exitosa:', dataSincronizar.data);
+
+//                 if (dataSincronizar.data.productosNuevos > 0) {
+//                     console.log(`🎉 ${dataSincronizar.data.productosNuevos} productos nuevos agregados`);
+//                     alert(`✅ Se agregaron ${dataSincronizar.data.productosNuevos} productos nuevos a tu catálogo`);
+//                 } else {
+//                     console.log('ℹ️ Ya tienes todos los productos sincronizados');
+//                     alert('ℹ️ Ya tienes todos los productos disponibles');
+//                 }
+//             }
+//         } catch (error) {
+//         } finally {
+//             setSincronizando(false);
+//             await cargarProductosAdmin();
+//             await cargarMisProductos();
+//         }
+//     };
+
+//     // ============================================
+//     // Reemplazar cargarProductosAdmin:
+//     // ============================================
+
+//     const cargarProductosAdmin = async () => {
+//         console.log('🔍 Cargando productos del admin...');
+//         try {
+//             const token = obtenerToken();
+
+//             if (!token) {
+//                 console.error('❌ No se pueden cargar productos sin token');
+//                 return;
+//             }
+
+//             const res = await fetch(API_URL, {
+//                 headers: {
+//                     'Authorization': `Bearer ${token}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             });
+
+//             if (!res.ok) {
+//                 throw new Error(`Error ${res.status}: ${await res.text()}`);
+//             }
+
+//             const data = await res.json();
+//             console.log('📦 Respuesta productos admin:', data);
+
+//             if (data.success) {
+//                 const resPersonalizados = await fetch(
+//                     `${API_VENDEDOR}?vendedorId=${vendedorId}`,
+//                     {
+//                         headers: {
+//                             'Authorization': `Bearer ${token}`,
+//                             'Content-Type': 'application/json'
+//                         }
+//                     }
+//                 );
+
+//                 const dataPersonalizados = await resPersonalizados.json();
+
+//                 const idsPersonalizados = dataPersonalizados.success
+//                     ? dataPersonalizados.data
+//                         .filter((p: Producto) => p.productoAdminId)
+//                         .map((p: Producto) => p.productoAdminId)
+//                     : [];
+
+//                 console.log('🔍 IDs ya personalizados:', idsPersonalizados);
+
+//                 const productosDisponibles = data.data.filter((p: Producto) => {
+//                     return p.productoAdmin === true;
+//                 }).map((p: Producto) => ({
+//                     ...p,
+//                     yaPersonalizado: idsPersonalizados.includes(p._id || p.id)
+//                 }));
+
+//                 console.log('✅ Productos admin disponibles:', productosDisponibles.length);
+//                 setProductosAdmin(productosDisponibles);
+//             }
+//         } catch (e) {
+//             console.error('❌ Error al cargar productos admin:', e);
+//         }
+//     };
+
+//     // ============================================
+//     // Reemplazar cargarMisProductos:
+//     // ============================================
+
+//     const cargarMisProductos = async () => {
+//         console.log('🔍 Cargando MIS productos...');
+//         console.log('🆔 Vendedor ID actual:', vendedorId);
+
+//         try {
+//             const token = obtenerToken();
+
+//             if (!token) {
+//                 console.error('❌ No se pueden cargar productos sin token');
+//                 return;
+//             }
+
+//             const url = `${API_VENDEDOR}?vendedorId=${vendedorId}`;
+//             console.log('🌐 URL de petición:', url);
+
+//             const res = await fetch(url, {
+//                 headers: {
+//                     'Authorization': `Bearer ${token}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             });
+
+//             if (!res.ok) {
+//                 throw new Error(`Error ${res.status}: ${await res.text()}`);
+//             }
+
+//             const data = await res.json();
+//             console.log('📦 Respuesta mis productos:', data);
+
+//             if (data.success) {
+//                 const misProductosVendedor = data.data.filter((p: Producto) => {
+//                     const esDelVendedor =
+//                         p.productoAdmin === false &&
+//                         p.productoVendedor === true &&
+//                         p.vendedorId === vendedorId;
+
+//                     return esDelVendedor;
+//                 });
+
+//                 console.log('✅ Mis productos filtrados:', misProductosVendedor.length);
+//                 setMisProductos(misProductosVendedor);
+//             }
+//         } catch (e) {
+//             console.error('❌ Error al cargar mis productos:', e);
+//             alert('❌ Error al cargar tus productos');
+//         }
+//     };
+
+//     // ============================================
+//     // Reemplazar eliminarProducto:
+//     // ============================================
+
+//     const eliminarProducto = async (id: string) => {
+//         console.log('🗑️ Intentando eliminar producto con ID:', id);
+
+//         if (!id) {
+//             alert('❌ ID de producto no válido');
+//             return;
+//         }
+
+//         if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+
+//         setLoading(true);
+//         try {
+//             const token = obtenerToken();
+
+//             if (!token) {
+//                 alert('❌ No hay token válido. Inicia sesión nuevamente.');
+//                 setLoading(false);
+//                 return;
+//             }
+
+//             const idVendedorActual = vendedorId || user?.id;
+
+//             if (!idVendedorActual) {
+//                 alert('❌ No se pudo identificar el vendedor');
+//                 setLoading(false);
+//                 return;
+//             }
+
+//             const url = `${API_VENDEDOR}/${id}?vendedorId=${idVendedorActual}`;
+//             console.log('🌐 URL de eliminación:', url);
+
+//             const res = await fetch(url, {
+//                 method: 'DELETE',
+//                 headers: {
+//                     'Authorization': `Bearer ${token}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             });
+
+//             const data = await res.json();
+
+//             if (res.ok && data.success) {
+//                 alert('✅ Producto eliminado exitosamente');
+//                 await cargarMisProductos();
+//                 await cargarProductosAdmin();
+//             } else {
+//                 alert('❌ Error al eliminar: ' + (data.message || 'Error desconocido'));
+//             }
+//         } catch (err) {
+//             console.error('❌ Error al eliminar:', err);
+//             alert('❌ Error de conexión al eliminar producto');
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     // ============================================
+//     // Reemplazar handleSubmit:
+//     // ============================================
+
 //     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 //         e.preventDefault();
 //         setLoading(true);
 //         setError('');
 
 //         try {
+//             const token = obtenerToken();
+
+//             if (!token) {
+//                 setError('No hay token válido. Inicia sesión nuevamente.');
+//                 setLoading(false);
+//                 return;
+//             }
+
 //             if (!form.productoAdminId && !editMode) {
 //                 setError('Debes seleccionar un producto del admin primero');
 //                 setLoading(false);
@@ -339,20 +619,17 @@
 //             let url = API_VENDEDOR;
 //             let method = 'POST';
 
-//             // ✅ Si estamos editando, cambiar URL y método
 //             if (editMode && editingProductId) {
 //                 url = `${API_VENDEDOR}/${editingProductId}`;
 //                 method = 'PUT';
-//                 // El vendedorId ya está en el payload, no hace falta agregarlo de nuevo
 //             }
 
 //             console.log('📤 Enviando payload:', JSON.stringify(payload, null, 2));
-//             console.log('🌐 URL:', url);
-//             console.log('🔧 Método:', method);
 
 //             const res = await fetch(url, {
 //                 method: method,
 //                 headers: {
+//                     'Authorization': `Bearer ${token}`,
 //                     'Content-Type': 'application/json',
 //                 },
 //                 body: JSON.stringify(payload),
@@ -378,71 +655,9 @@
 //             }
 //         } catch (err) {
 //             console.error('❌ Error completo:', err);
-
-//             if (err instanceof TypeError && err.message.includes('fetch')) {
-//                 const errorMsg = '❌ No se pudo conectar con el servidor. Verifica que esté corriendo en http://localhost:5000';
-//                 setError(errorMsg);
-//                 alert(errorMsg);
-//             } else if (err instanceof SyntaxError) {
-//                 const errorMsg = '❌ Error al procesar la respuesta del servidor';
-//                 setError(errorMsg);
-//                 alert(errorMsg);
-//             } else {
-//                 const errorMsg = err instanceof Error ? err.message : 'Error de conexión desconocido';
-//                 setError(errorMsg);
-//                 alert('❌ ' + errorMsg);
-//             }
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     // ✅ CORRECCIÓN CRÍTICA: Eliminar producto
-//     const eliminarProducto = async (id: string) => {
-//         console.log('🗑️ Intentando eliminar producto con ID:', id);
-//         alert(id + 'esto seria la parte del id del vendedor')
-//         if (!id) {
-//             alert('❌ ID de producto no válido');
-//             return;
-//         }
-
-//         if (!confirm('¿Estás seguro de eliminar este producto?')) return;
-
-//         setLoading(true);
-//         try {
-//             const idVendedorActual = vendedorId || user?.id;
-
-//             if (!idVendedorActual) {
-//                 alert('❌ No se pudo identificar el vendedor');
-//                 setLoading(false);
-//                 return;
-//             }
-
-//             // ✅ CORRECCIÓN: Enviar vendedorId en query string
-//             const url = `${API_VENDEDOR}/${id}?vendedorId=${idVendedorActual}`;
-//             console.log('🌐 URL de eliminación:', url);
-
-//             const res = await fetch(url, {
-//                 method: 'DELETE',
-//                 headers: {
-//                     'Authorization': `Bearer ${sessionStorage.getItem('vendedorToken')}`,
-//                     'Content-Type': 'application/json'
-//                 }
-//             });
-
-//             const data = await res.json();
-//             console.log('📥 Respuesta del servidor:', data);
-
-//             if (res.ok && data.success) {
-//                 alert('✅ Producto eliminado exitosamente');
-//                 await cargarMisProductos();
-//                 await cargarProductosAdmin(); // Recargar para mostrar el producto admin de nuevo
-//             } else {
-//                 alert('❌ Error al eliminar: ' + (data.message || 'Error desconocido'));
-//             }
-//         } catch (err) {
-//             console.error('❌ Error al eliminar:', err);
-//             alert('❌ Error de conexión al eliminar producto');
+//             const errorMsg = err instanceof Error ? err.message : 'Error de conexión desconocido';
+//             setError(errorMsg);
+//             alert('❌ ' + errorMsg);
 //         } finally {
 //             setLoading(false);
 //         }
@@ -450,7 +665,6 @@
 
 
 //     const seleccionarProductoAdmin = (p: Producto) => {
-//         // ✅ Prevenir selección si ya está personalizado
 //         if (p.yaPersonalizado) {
 //             alert('⚠️ Ya personalizaste este producto. Edítalo desde "Mis Productos"');
 //             return;
@@ -464,7 +678,7 @@
 //             marca: p.marca,
 //             descripcion: p.descripcion,
 //             stock: p.stock.toString(),
-//             precioAdminFijo: (p.precioAdminFijo || p.precio).toString(),
+//             precioAdminFijo: (p.precio).toString(),
 //             precioFinal: p.precioFinal,
 //             moneda: p.moneda,
 //             descuento: '0',
@@ -492,7 +706,7 @@
 //             marca: p.marca,
 //             descripcion: p.descripcion,
 //             stock: p.stock.toString(),
-//             precioAdminFijo: (p.precioAdminFijo || p.precio).toString(),
+//             precioAdminFijo: (p.precio).toString(),
 //             precioFinal: p.precioFinal,
 //             moneda: p.moneda,
 //             descuento: p.descuento.toString(),
@@ -547,31 +761,53 @@
 //                         <div className="w-20 h-20 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
 //                             <Package size={40} className="text-white" />
 //                         </div>
-//                         <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Panel Vendedor</h1>
+//                         <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+//                             Panel Vendedor
+//                         </h1>
 //                         <p className="text-gray-600">Gestiona tus productos</p>
 //                     </div>
+
 //                     <div className="space-y-4">
+//                         {/* ID Vendedor - Solo si está logueado en el sistema general */}
+//                         {user && user.rol === 'vendedor' ? (
+//                             <div>
+//                                 <label className="block text-sm font-semibold mb-2 text-gray-700">
+//                                     ID Vendedor
+//                                 </label>
+//                                 <input
+//                                     type="password"
+//                                     value={login.id || user.id}
+//                                     readOnly
+//                                     className="w-full px-4 py-3 border-2 border-emerald-300 bg-emerald-50 rounded-xl outline-none cursor-not-allowed text-gray-900"
+//                                 />
+//                                 <p className="text-xs text-emerald-600 mt-1 font-semibold">
+//                                     ✅ ID autocompletado desde tu sesión
+//                                 </p>
+//                             </div>
+//                         ) : (
+//                             <div>
+//                                 <label className="block text-sm font-semibold mb-2 text-gray-700">
+//                                     ID Vendedor
+//                                 </label>
+//                                 <input
+//                                     type="password"
+//                                     value={login.id}
+//                                     onChange={e => setLogin(p => ({ ...p, id: e.target.value }))}
+//                                     required
+//                                     placeholder="Tu ID de vendedor"
+//                                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 outline-none transition text-gray-900"
+//                                 />
+//                                 <p className="text-xs text-gray-500 mt-1">
+//                                     Consulta tu ID con el administrador
+//                                 </p>
+//                             </div>
+//                         )}
+
+//                         {/* Email */}
 //                         <div>
-//                             <label className="block text-sm font-semibold mb-2 text-gray-700">ID Vendedor</label>
-//                             <input
-//                                 type="password"
-//                                 value={login.id}
-//                                 onChange={e => setLogin(p => ({ ...p, id: e.target.value }))}
-//                                 required
-//                                 placeholder="Tu ID"
-//                                 readOnly={!!user && user.rol === 'vendedor'}
-//                                 className={`w-full px-4 py-3 border-2 rounded-xl outline-none transition text-gray-900 ${user && user.rol === 'vendedor'
-//                                     ? 'border-emerald-300 bg-emerald-50 cursor-not-allowed'
-//                                     : 'border-gray-200 focus:border-emerald-500'
-//                                     }`}
-//                             />
-//                             {user && user.rol === 'vendedor' && (
-//                                 <p className="text-xs text-emerald-600 mt-1 font-semibold">✅ ID autocompletado desde tu sesión</p>
-//                             )}
-//                             <p className="text-xs text-gray-500 mt-1">🔒 Tu ID está oculto por seguridad</p>
-//                         </div>
-//                         <div>
-//                             <label className="block text-sm font-semibold mb-2 text-gray-700">Email</label>
+//                             <label className="block text-sm font-semibold mb-2 text-gray-700">
+//                                 Email
+//                             </label>
 //                             <input
 //                                 type="email"
 //                                 value={login.email}
@@ -581,8 +817,12 @@
 //                                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 outline-none transition text-gray-900"
 //                             />
 //                         </div>
+
+//                         {/* Password */}
 //                         <div>
-//                             <label className="block text-sm font-semibold mb-2 text-gray-700">Contraseña</label>
+//                             <label className="block text-sm font-semibold mb-2 text-gray-700">
+//                                 Contraseña
+//                             </label>
 //                             <input
 //                                 type="password"
 //                                 value={login.password}
@@ -592,19 +832,51 @@
 //                                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 outline-none transition text-gray-900"
 //                             />
 //                         </div>
-//                         {error && <div className="bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-lg text-sm">{error}</div>}
-//                         <button onClick={handleLogin} disabled={loading} className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold disabled:opacity-50 hover:shadow-lg transition transform hover:scale-105">
+
+//                         {/* Error */}
+//                         {error && (
+//                             <div className="bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-lg text-sm">
+//                                 {error}
+//                             </div>
+//                         )}
+
+//                         {/* Botón Login */}
+//                         <button
+//                             onClick={handleLogin}
+//                             disabled={loading}
+//                             className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold disabled:opacity-50 hover:shadow-lg transition transform hover:scale-105"
+//                         >
 //                             {loading ? 'Iniciando...' : 'Iniciar Sesión'}
 //                         </button>
+
+//                         {/* Info adicional */}
+//                         <div className="bg-blue-50 border-l-4 border-blue-500 px-4 py-3 rounded-lg text-sm">
+//                             <p className="text-blue-700 font-semibold mb-1">ℹ️ Información:</p>
+//                             <ul className="text-blue-600 text-xs space-y-1">
+//                                 <li>• Usa las credenciales que te proporcionó el administrador</li>
+//                                 <li>• Si no recuerdas tu contraseña, contacta al administrador</li>
+//                                 <li>• El ID debe ser el mismo que te asignaron</li>
+//                             </ul>
+//                         </div>
 //                     </div>
 //                 </div>
 //             </div>
 //         );
 //     }
 
+
 //     return (
 //         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-teal-50 p-3 sm:p-4 md:p-6">
 //             <div className="max-w-7xl mx-auto">
+//                 {sincronizando && (
+//                     <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl p-4 mb-4 shadow-lg">
+//                         <div className="flex items-center justify-center gap-3">
+//                             <RefreshCw className="animate-spin" size={24} />
+//                             <span className="font-semibold">Sincronizando productos nuevos...</span>
+//                         </div>
+//                     </div>
+//                 )}
+
 //                 <div className="bg-white rounded-2xl p-4 mb-4 sm:mb-6 shadow-lg border border-gray-100">
 //                     <div className="flex flex-col gap-3">
 //                         <div>
@@ -623,6 +895,16 @@
 //                             >
 //                                 📊 Dashboard
 //                             </button>
+
+//                             <button
+//                                 onClick={sincronizarManualmente}
+//                                 disabled={sincronizando}
+//                                 className="w-full sm:w-auto px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm rounded-xl font-semibold transition shadow-md disabled:opacity-50 flex items-center justify-center gap-2"
+//                             >
+//                                 <RefreshCw size={16} className={sincronizando ? 'animate-spin' : ''} />
+//                                 {sincronizando ? 'Sincronizando...' : 'Sincronizar Productos'}
+//                             </button>
+
 //                             <button
 //                                 onClick={logout}
 //                                 className="w-full sm:w-auto px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-sm rounded-xl font-semibold transition shadow-md"
@@ -1035,12 +1317,13 @@
 //                                                 {p.precioAdminFijo && (
 //                                                     <div className="flex justify-between mb-1.5 text-xs bg-red-50 p-2 rounded border border-red-200">
 //                                                         <span className="text-red-700 font-semibold">🔒 Base Admin:</span>
-//                                                         <span className="font-bold text-red-800">{fmt(p.precioAdminFijo, p.moneda)}</span>
+//                                                         <span className="font-bold text-red-800">{fmt(p.precio, p.moneda)}</span>
 //                                                     </div>
 //                                                 )}
 //                                                 <div className="flex justify-between mb-2">
 //                                                     <span className="text-xs text-gray-700 font-semibold">Precio Final:</span>
 //                                                     <span className="text-sm sm:text-base font-bold text-emerald-700">{fmt(p.precioFinal, p.moneda)}</span>
+                                                    
 //                                                 </div>
 //                                                 <hr className="border-emerald-300 mb-2" />
 //                                                 <div className="flex justify-between items-center mb-2">
@@ -1200,6 +1483,11 @@
 //         </div>
 //     );
 // }
+
+
+
+
+
 
 
 
@@ -1947,7 +2235,7 @@ export default function VendedorProductos() {
         const precio = p ?? 0;
         return m === 'ARS'
             ? `$${precio.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-            : `USD $${precio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            : `EUR €${precio.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     };
 
     const productosFiltrados = (vistaActual === 'admin' ? productosAdmin : misProductos).filter(p => {
@@ -2688,4 +2976,3 @@ export default function VendedorProductos() {
         </div>
     );
 }
-
