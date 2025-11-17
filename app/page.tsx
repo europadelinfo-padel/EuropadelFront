@@ -296,7 +296,6 @@
 
 
 
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -321,7 +320,7 @@ interface Producto {
   moneda: 'ARS' | 'USD';
   descuento: number;
   imagenUrl: string;
-  categoria: 'pelota' | 'ropa' | 'accesorio';
+  categoria: 'paleta' | 'ropa' | 'accesorio';
   destacado: boolean;
   whatsappAdmin?: string;
   userWhatsapp?: string;
@@ -339,7 +338,7 @@ interface Producto {
 
 export default function HomePage() {
   const [productos, setProductos] = useState<Producto[]>([]);
-  const [filtro, setFiltro] = useState<'todos' | 'pelota' | 'ropa' | 'accesorio'>('todos');
+  const [filtro, setFiltro] = useState<'todos' | 'paleta' | 'ropa' | 'accesorio'>('todos');
   const [busqueda, setBusqueda] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
