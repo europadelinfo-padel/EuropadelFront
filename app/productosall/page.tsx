@@ -458,7 +458,6 @@
 
 
 
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -480,7 +479,7 @@ interface Producto {
   moneda: 'ARS' | 'USD';
   descuento: number;
   imagenUrl: string;
-  categoria: 'pelota' | 'ropa' | 'accesorio';
+  categoria: 'paleta' | 'ropa' | 'accesorio';
   destacado: boolean;
   whatsappAdmin?: string;
   userWhatsapp?: string;
@@ -498,7 +497,7 @@ interface Producto {
 
 interface Filtros {
   buscar: string;
-  categoria: 'todos' | 'pelota' | 'ropa' | 'accesorio';
+  categoria: 'todos' | 'paleta' | 'ropa' | 'accesorio';
   destacado: boolean;
 }
 
@@ -664,11 +663,11 @@ export default function ProductosPage() {
               <FaFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
               <select
                 value={filtros.categoria}
-                onChange={(e) => setFiltros({ ...filtros, categoria: e.target.value as 'todos' | 'pelota' | 'ropa' | 'accesorio' })}
+                onChange={(e) => setFiltros({ ...filtros, categoria: e.target.value as 'todos' | 'paleta' | 'ropa' | 'accesorio' })}
                 className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-2xl focus:border-purple-600 focus:outline-none transition-all appearance-none cursor-pointer text-gray-800"
               >
                 <option value="todos">Todas las categorías</option>
-                <option value="pelota">⚽ Pelotas</option>
+                <option value="paleta">⚽ Paleta</option>
                 <option value="ropa">👕 Ropa</option>
                 <option value="accesorio">🎒 Accesorios</option>
               </select>
@@ -768,7 +767,7 @@ export default function ProductosPage() {
                         {producto.marca}
                       </span>
                       <span className="text-2xl">
-                        {producto.categoria === 'pelota' && '⚽'}
+                        {producto.categoria === 'paleta' && '⚽'}
                         {producto.categoria === 'ropa' && '👕'}
                         {producto.categoria === 'accesorio' && '🎒'}
                       </span>
