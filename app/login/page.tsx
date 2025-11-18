@@ -181,7 +181,7 @@ export default function Login() {
           </button>
 
           <Link 
-            href="/recuperar-password"
+            href="/resetpass"
             className="block text-center text-purple-600 hover:text-purple-800 text-sm font-semibold mt-4"
           >
             Recuperar contraseña
@@ -191,6 +191,7 @@ export default function Login() {
     </div>
   );
 }
+
 
 
 
