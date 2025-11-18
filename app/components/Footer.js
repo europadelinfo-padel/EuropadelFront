@@ -55,7 +55,7 @@ const Footer = () => {
             <h4 className={stylesFooter.sectionTitle}>Enlaces Rápidos</h4>
             <ul className={stylesFooter.linkList}>
               {[
-                { name: "Productos", href: "productall" },
+                { name: "Productos", href: "productosall" },
                 // { name: "Ofertas", href: "#ofertas" },
                 // { name: "Marcas", href: "#marcas" },
                 // { name: "Blog", href: "#blog" },
@@ -76,7 +76,7 @@ const Footer = () => {
             <h4 className={stylesFooter.sectionTitle}>Información</h4>
             <ul className={stylesFooter.linkList}>
               {[
-                { name: "Términos y Condiciones", href: "terminos" },
+                { name: "Términos y Condiciones", href: "/" },
                 // { name: "Política de Envíos", href: "#envios" },
                 // { name: "Devoluciones", href: "#devoluciones" },
                 // { name: "Preguntas Frecuentes", href: "#faq" },
@@ -220,4 +220,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
 
