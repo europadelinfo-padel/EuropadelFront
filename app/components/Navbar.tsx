@@ -53,6 +53,7 @@ const Navbar: React.FC = () => {
         <div className={`${stylesNavbar.navbarMenu} ${stylesNavbar.desktopMenu}`}>
           {!user ? (
             <>
+              <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
               <Link href="/login" className={stylesNavbar.navLink}>Login</Link>
               <Link href="/productosall" className={stylesNavbar.navLink}>Productos</Link>
               <Link href="/registro" className={`${stylesNavbar.navLink} ${stylesNavbar.btnRegister}`}>Registro</Link>
@@ -165,3 +166,4 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
