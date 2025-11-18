@@ -110,6 +110,7 @@ const Navbar: React.FC = () => {
         <div className={`${stylesNavbar.mobileMenu} ${isMenuOpen ? stylesNavbar.active : ""}`}>
           {!user ? (
             <>
+              <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
               <Link href="/login" className={stylesNavbar.mobileLink} onClick={closeMenu}>Login</Link>
               <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={closeMenu}>Productos</Link>
               <Link
@@ -166,4 +167,5 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
 
