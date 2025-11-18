@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
             <>
               {/* Rutas para todos los usuarios logueados */}
               <Link href="/productosall" className={stylesNavbar.navLink}>Productos</Link>
-
+              <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
               {/* Rutas para vendedores y admins */}
               {(user.rol === "vendedor") && (
                 <Link href="/crear-producto" className={stylesNavbar.navLink}>Crear Producto</Link>
@@ -167,5 +167,6 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
 
 
