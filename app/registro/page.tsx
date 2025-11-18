@@ -389,7 +389,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                 {mode === 'register' && (
                     <form onSubmit={handleRegister} className="space-y-4">
                         <div>
-                            <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="nombre" className="block text-sm font-medium text-gray-900 mb-1">
                                 Nombre completo
                             </label>
                             <input
@@ -405,7 +405,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </div>
 
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-1">
                                 Correo electrónico
                             </label>
                             <input
@@ -421,7 +421,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-900 mb-1">
                                 Contraseña
                             </label>
                             <input
@@ -437,7 +437,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </div>
 
                         <div>
-                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-900 mb-1">
                                 Confirmar contraseña
                             </label>
                             <input
@@ -485,7 +485,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </div>
 
                         <div>
-                            <label htmlFor="verify-code" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="verify-code" className="block text-sm font-medium text-gray-900 mb-1">
                                 Código de verificación
                             </label>
                             <input
@@ -532,7 +532,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </p>
 
                         <div>
-                            <label htmlFor="recover-email" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="recover-email" className="block text-sm font-medium text-gray-900 mb-1">
                                 Correo electrónico
                             </label>
                             <input
@@ -580,7 +580,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </div>
 
                         <div>
-                            <label htmlFor="reset-code" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="reset-code" className="block text-sm font-medium text-gray-900 mb-1">
                                 Código de recuperación
                             </label>
                             <input
@@ -597,7 +597,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </div>
 
                         <div>
-                            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-900 mb-1">
                                 Nueva contraseña
                             </label>
                             <input
@@ -613,7 +613,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </div>
 
                         <div>
-                            <label htmlFor="confirmNewPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="confirmNewPassword" className="block text-sm font-medium text-gray-900 mb-1">
                                 Confirmar nueva contraseña
                             </label>
                             <input
@@ -655,7 +655,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                 {mode === 'login' && (
                     <form onSubmit={handleLogin} className="space-y-4">
                         <div>
-                            <label htmlFor="login-email" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="login-email" className="block text-sm font-medium text-gray-900 mb-1">
                                 Correo electrónico
                             </label>
                             <input
@@ -671,7 +671,7 @@ export default function AuthForm({ onLoginSuccess }: AuthFormProps) {
                         </div>
 
                         <div>
-                            <label htmlFor="login-password" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="login-password" className="block text-sm font-medium text-gray-900 mb-1">
                                 Contraseña
                             </label>
                             <input
