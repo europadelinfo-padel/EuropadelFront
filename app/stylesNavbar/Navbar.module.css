@@ -2,12 +2,11 @@
 html,
 body {
   width: 100%;
-  overflow-x: hidden; /* evita barra de scroll horizontal en toda la página */
+  overflow-x: hidden;
 }
 
-
 /* ============================================
-   NAVBAR - Estilo Paddle Professional con imagen
+   NAVBAR - Estilo Paddle Professional
    ============================================ */
 
 .navbar {
@@ -18,6 +17,12 @@ body {
   backdrop-filter: blur(20px);
   box-shadow: 0 4px 30px rgba(102, 126, 234, 0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: linear-gradient(135deg, rgba(102,126,234,0.9) 0%, rgba(118,75,162,0.9) 100%);
+  box-shadow: 0 8px 40px rgba(102, 126, 234, 0.4);
 }
 
 /* ============================================
@@ -54,8 +59,8 @@ body {
 
 .logoImage {
   width: 60px;
-  object-fit: cover;
   height: 60px;
+  object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
   transition: box-shadow 0.3s ease;
@@ -65,16 +70,6 @@ body {
   box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
 }
 
-.logoText {
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #ffffff 0%, #f0e7ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.5px;
-}
-
 /* ============================================
    DESKTOP MENU
    ============================================ */
@@ -82,7 +77,7 @@ body {
 .navbarMenu {
   display: none;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .desktopMenu {
@@ -105,6 +100,12 @@ body {
   border-radius: 8px;
   transition: all 0.3s ease;
   letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.linkText {
+  position: relative;
+  z-index: 1;
 }
 
 .navLink::before {
@@ -137,6 +138,10 @@ body {
   border: 2px solid transparent;
 }
 
+.btnRegister::before {
+  display: none;
+}
+
 .btnRegister:hover {
   background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
   box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
@@ -145,7 +150,7 @@ body {
 }
 
 /* ============================================
-   USER MENU
+   USER MENU - DESKTOP
    ============================================ */
 
 .userMenu {
@@ -158,9 +163,6 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
-
-/* resto del CSS se mantiene igual, sin tocar */
-
 
 .userInfo {
   display: flex;
@@ -202,25 +204,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 500;
-}
-
-.btnLogout {
-  background: rgba(239, 68, 68, 0.2);
-  color: white;
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  padding: 0.5rem 1.25rem;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btnLogout:hover {
-  background: rgba(239, 68, 68, 0.3);
-  border-color: rgba(239, 68, 68, 0.6);
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-  transform: translateY(-2px);
 }
 
 /* ============================================
@@ -271,69 +254,147 @@ body {
   transform: scale(1.1);
 }
 
-
 /* ============================================
-   MOBILE MENU — corregido
+   MOBILE MENU - MEJORADO 🔥
    ============================================ */
+
 .mobileMenu {
   position: fixed;
   top: 0;
   right: -100%;
-  width: 80%;
-  max-width: 320px;
+  width: 85%;
+  max-width: 380px;
   height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 1.5rem;
-  gap: 1.2rem;
   z-index: 1050;
-  transition: right 0.3s ease-in-out;
+  transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   overflow-y: auto;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
 }
 
 .mobileMenu.active {
   right: 0;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
-  z-index: 1040;
-}
-
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Contenedor interno para el padding y espaciado */
+.mobileMenuContent {
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 1.5rem 2rem;
+  gap: 0.5rem;
+  min-height: 100vh;
 }
 
 /* ============================================
-   LINKS DEL MENÚ MÓVIL
+   HEADER DE USUARIO MÓVIL - MEJORADO
    ============================================ */
+
+.mobileUserHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mobileUserAvatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.5);
+  flex-shrink: 0;
+}
+
+.mobileUserName {
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.mobileUserRole {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+/* ============================================
+   DIVIDER
+   ============================================ */
+
+.mobileDivider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  margin: 0.5rem 0;
+}
+
+/* ============================================
+   LINKS DEL MENÚ MÓVIL - MEJORADO
+   ============================================ */
+
 .mobileLink {
+  display: block;
   color: #ffffff;
   text-decoration: none;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1rem;
   padding: 1rem 1.5rem;
   border-radius: 12px;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  text-align: center;
+  text-align: left;
   backdrop-filter: blur(10px);
+  margin-bottom: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.mobileLink::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: linear-gradient(180deg, #a855f7, #ec4899);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
 }
 
 .mobileLink:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateX(10px);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.mobileLink:hover::before {
+  transform: scaleY(1);
+}
+
+.mobileLink:active {
+  transform: translateX(5px) scale(0.98);
 }
 
 .mobileLinkHighlight {
@@ -343,76 +404,48 @@ body {
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
+.mobileLinkHighlight::before {
+  display: none;
+}
+
 .mobileLinkHighlight:hover {
   background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
-  transform: translateX(10px) scale(1.02);
+  transform: translateX(5px) scale(1.02);
 }
 
 /* ============================================
-   INFO DE USUARIO MÓVIL
+   BOTÓN CERRAR SESIÓN - MEJORADO
    ============================================ */
-.mobileUserInfo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  margin-top: 1rem;
-}
 
-.mobileUserAvatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 1.3rem;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-}
-
-.mobileUserName {
-  color: white;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.mobileUserRole {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-}
-
-/* ============================================
-   BOTÓN CERRAR SESIÓN
-   ============================================ */
 .mobileBtnLogout {
   width: 100%;
   background: rgba(239, 68, 68, 0.2);
   color: white;
   border: 2px solid rgba(239, 68, 68, 0.4);
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   border-radius: 12px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: auto;
+  margin-top: 1rem;
   backdrop-filter: blur(10px);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .mobileBtnLogout:hover {
-  background: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.35);
   border-color: rgba(239, 68, 68, 0.6);
-  transform: scale(1.02);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
 }
 
+.mobileBtnLogout:active {
+  transform: translateX(5px) scale(0.98);
+}
 
 /* ============================================
    OVERLAY
@@ -435,89 +468,112 @@ body {
   to { opacity: 1; }
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-@media (max-width: 768px) {
-  .navbarContainer { padding: 1rem 1.5rem; }
-  .logoText { font-size: 1.3rem; }
-}
-
-@media (max-width: 480px) {
-  .navbarContainer { padding: 0.75rem 1rem; }
-  .logoImage { width: 35px; height: 35px; }
-  .logoText { font-size: 1.2rem; }
-  .mobileMenu { width: 90%; }
-}
-
-/* ============================================
-   SCROLLBARS & ANIMACIONES
-   ============================================ */
-
-:global(.mobileMenu::-webkit-scrollbar) { width: 6px; }
-:global(.mobileMenu::-webkit-scrollbar-track) {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-:global(.mobileMenu::-webkit-scrollbar-thumb) {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-}
-:global(.mobileMenu::-webkit-scrollbar-thumb:hover) {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* Animación de salida */
-@keyframes slideOutRight {
-  from { transform: translateX(0); opacity: 1; }
-  to { transform: translateX(100%); opacity: 0; }
-}
-
-.mobileMenu.closing {
-  animation: slideOutRight 0.3s ease forwards;
-}
-
-.overlay.closing {
-  animation: fadeOut 0.3s ease forwards;
-}
-
 @keyframes fadeOut {
   from { opacity: 1; }
   to { opacity: 0; }
 }
 
+/* ============================================
+   ANIMACIONES DE ENTRADA
+   ============================================ */
 
-.mobileMenu.active .mobileLink,
-.mobileMenu.active .mobileUserInfo,
-.mobileMenu.active .mobileBtnLogout {
-  animation: slideInRight 0.3s ease forwards;
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.mobileMenu.active .mobileLink:nth-child(1) { animation-delay: 0.1s; }
-.mobileMenu.active .mobileLink:nth-child(2) { animation-delay: 0.2s; }
-.mobileMenu.active .mobileLink:nth-child(3) { animation-delay: 0.3s; }
-.mobileMenu.active .mobileUserInfo { animation-delay: 0.4s; }
+.mobileMenu.active .mobileLink,
+.mobileMenu.active .mobileUserHeader,
+.mobileMenu.active .mobileBtnLogout {
+  animation: slideInRight 0.4s ease forwards;
+  opacity: 0;
+}
+
+.mobileMenu.active .mobileUserHeader {
+  animation-delay: 0.1s;
+}
+
+.mobileMenu.active .mobileLink:nth-child(3) { animation-delay: 0.2s; }
+.mobileMenu.active .mobileLink:nth-child(4) { animation-delay: 0.25s; }
+.mobileMenu.active .mobileLink:nth-child(5) { animation-delay: 0.3s; }
+.mobileMenu.active .mobileLink:nth-child(6) { animation-delay: 0.35s; }
+.mobileMenu.active .mobileLink:nth-child(7) { animation-delay: 0.4s; }
 .mobileMenu.active .mobileBtnLogout { animation-delay: 0.5s; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .navbarContainer {
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbarContainer {
+    padding: 0.75rem 1rem;
+  }
+  
+  .logoImage {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .mobileMenu {
+    width: 90%;
+  }
+  
+  .mobileMenuContent {
+    padding: 4rem 1rem 1.5rem;
+  }
+}
+
+/* ============================================
+   SCROLLBARS
+   ============================================ */
+
+.mobileMenu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mobileMenu::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.mobileMenu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.mobileMenu::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
 
 /* ============================================
    ACCESIBILIDAD
    ============================================ */
 
-:global(*:focus-visible),
-:global(.navLink:focus-visible),
-:global(.mobileLink:focus-visible),
-:global(.btnRegister:focus-visible),
-:global(.btnLogout:focus-visible),
-:global(.mobileBtnLogout:focus-visible) {
-  outline: 3px solid rgba(255, 255, 255, 0.5);
+.navLink:focus-visible,
+.mobileLink:focus-visible,
+.btnRegister:focus-visible,
+.mobileBtnLogout:focus-visible,
+.hamburger:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.6);
   outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :global(*),
-  :global(*::before),
-  :global(*::after) {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
