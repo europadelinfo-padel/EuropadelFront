@@ -308,24 +308,20 @@ const Navbar: React.FC = () => {
             {!user ? (
               <>
                 <Link href="/" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
-                  <span className={stylesNavbar.mobileLinkIcon}>🏠</span>
-                  <span>Inicio</span>
+                  Inicio
                 </Link>
                 <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
-                  <span className={stylesNavbar.mobileLinkIcon}>🛍️</span>
-                  <span>Productos</span>
+                  Productos
                 </Link>
                 <Link href="/login" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
-                  <span className={stylesNavbar.mobileLinkIcon}>🔑</span>
-                  <span>Login</span>
+                  Login
                 </Link>
                 <Link
                   href="/registro"
                   className={`${stylesNavbar.mobileLink} ${stylesNavbar.mobileLinkHighlight}`}
                   onClick={handleLinkClick}
                 >
-                  <span className={stylesNavbar.mobileLinkIcon}>✨</span>
-                  <span>Registro</span>
+                  Registro
                 </Link>
               </>
             ) : (
@@ -343,25 +339,21 @@ const Navbar: React.FC = () => {
                 <div className={stylesNavbar.mobileDivider}></div>
 
                 <Link href="/" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
-                  <span className={stylesNavbar.mobileLinkIcon}>🏠</span>
-                  <span>Inicio</span>
+                  Inicio
                 </Link>
                 <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
-                  <span className={stylesNavbar.mobileLinkIcon}>🛍️</span>
-                  <span>Productos</span>
+                  Productos
                 </Link>
 
                 {user.rol === "vendedor" && (
                   <Link href="/crear-producto" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
-                    <span className={stylesNavbar.mobileLinkIcon}>➕</span>
-                    <span>Crear Producto</span>
+                    Crear Producto
                   </Link>
                 )}
 
                 {user.rol === "admin" && (
                   <Link href="/paneladmin" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
-                    <span className={stylesNavbar.mobileLinkIcon}>⚙️</span>
-                    <span>Panel Admin</span>
+                    Panel Admin
                   </Link>
                 )}
 
@@ -374,8 +366,7 @@ const Navbar: React.FC = () => {
                   }}
                   className={stylesNavbar.mobileBtnLogout}
                 >
-                  <span className={stylesNavbar.mobileLinkIcon}>🚪</span>
-                  <span>Cerrar Sesión</span>
+                  Cerrar Sesión
                 </button>
               </>
             )}
@@ -390,5 +381,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
-
