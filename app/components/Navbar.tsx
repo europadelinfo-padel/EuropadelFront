@@ -1,3 +1,174 @@
+// "use client";
+
+// import React, { useState, useEffect } from "react";
+// import Link from "next/link";
+// import stylesNavbar from "../stylesNavbar/Navbar.module.css";
+// import { useUser } from "./userContext";
+
+// const Navbar: React.FC = () => {
+//   const { user, logoutUser } = useUser();
+//   const [isMenuOpen, setIsMenuOpen] = useState(false);
+//   const [isMounted, setReady] = useState(false); // evita hydration mismatch
+
+//   useEffect(() => {
+//     const timer = setTimeout(() => setReady(true), 0);
+//     return () => clearTimeout(timer);
+//   }, []);
+
+//   useEffect(() => {
+//     document.body.style.overflow = isMenuOpen ? "hidden" : "";
+//     return () => {
+//       document.body.style.overflow = "";
+//     };
+//   }, [isMenuOpen]);
+
+//   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+//   const closeMenu = () => setIsMenuOpen(false);
+
+//   if (!isMounted) {
+//     return (
+//       <nav className={stylesNavbar.navbar}>
+//         <div className={stylesNavbar.navbarContainer}>
+//           <Link href="/">
+//             <div className={stylesNavbar.navbarLogo}>
+//               <img src="/assets/europadel2.jpg" alt="Logo" className={stylesNavbar.logoImage} />
+//             </div>
+//           </Link>
+//         </div>
+//       </nav>
+//     );
+//   }
+
+//   return (
+//     <nav className={stylesNavbar.navbar}>
+//       <div className={stylesNavbar.navbarContainer}>
+//         {/* Logo */}
+//         <Link href="/">
+//           <div className={stylesNavbar.navbarLogo}>
+//             <img src="/assets/europadel2.jpg" alt="Logo" className={stylesNavbar.logoImage} />
+//           </div>
+//         </Link>
+
+//         {/* Desktop Menu */}
+//         <div className={`${stylesNavbar.navbarMenu} ${stylesNavbar.desktopMenu}`}>
+//           {!user ? (
+//             <>
+//               <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
+//               <Link href="/login" className={stylesNavbar.navLink}>Login</Link>
+//               <Link href="/productosall" className={stylesNavbar.navLink}>Productos</Link>
+//               <Link href="/registro" className={`${stylesNavbar.navLink} ${stylesNavbar.btnRegister}`}>Registro</Link>
+//             </>
+//           ) : (
+//             <>
+//               {/* Rutas para todos los usuarios logueados */}
+//               <Link href="/productosall" className={stylesNavbar.navLink}>Productos</Link>
+//               <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
+//               {/* Rutas para vendedores y admins */}
+//               {(user.rol === "vendedor") && (
+//                 <Link href="/crear-producto" className={stylesNavbar.navLink}>Crear Producto</Link>
+//               )}
+
+//               {/* Solo admin */}
+//               {user.rol === "admin" && (
+//                 <Link href="/paneladmin" className={stylesNavbar.navLink}>Panel Admin</Link>
+//               )}
+
+//               {/* Info de usuario y logout */}
+//               <div className={stylesNavbar.userMenu}>
+//                 <div className={stylesNavbar.userInfo}>
+//                   <div className={stylesNavbar.userAvatar}>
+//                     {user?.nombre?.charAt(0).toUpperCase() || "?"}
+//                   </div>
+//                   <div className={stylesNavbar.userDetails}>
+//                     <span className={stylesNavbar.userName}>{user.nombre}</span>
+//                     <span className={stylesNavbar.userRole}>{user.rol}</span>
+//                   </div>
+//                 </div>
+//                 <button
+//                   onClick={logoutUser}
+//                   className={`${stylesNavbar.navLink} ${stylesNavbar.btnRegister}`}
+//                 >
+//                   Logout
+//                 </button>
+//               </div>
+//             </>
+//           )}
+//         </div>
+
+//         {/* Hamburger */}
+//         <button
+//           className={`${stylesNavbar.hamburger} ${isMenuOpen ? stylesNavbar.active : ""}`}
+//           onClick={toggleMenu}
+//           aria-label="Menu"
+//         >
+//           <span></span>
+//           <span></span>
+//           <span></span>
+//         </button>
+
+//         {/* Mobile Menu */}
+//         <div className={`${stylesNavbar.mobileMenu} ${isMenuOpen ? stylesNavbar.active : ""}`}>
+//           {!user ? (
+//             <>
+//               <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
+//               <Link href="/login" className={stylesNavbar.mobileLink} onClick={closeMenu}>Login</Link>
+//               <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={closeMenu}>Productos</Link>
+//               <Link
+//                 href="/registro"
+//                 className={`${stylesNavbar.mobileLink} ${stylesNavbar.mobileLinkHighlight}`}
+//                 onClick={closeMenu}
+//               >
+//                 Registro
+//               </Link>
+//             </>
+//           ) : (
+//             <>
+//               {/* Todos los usuarios logueados */}
+//               <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={closeMenu}>Productos</Link>
+
+//               {/* Vendedores y admins */}
+//               {(user.rol === "vendedor") && (
+//                 <Link href="/crear-producto" className={stylesNavbar.mobileLink} onClick={closeMenu}>Crear Producto</Link>
+//               )}
+
+//               {/* Solo admin */}
+//               {user.rol === "admin" && (
+//                 <Link href="/paneladmin" className={stylesNavbar.mobileLink} onClick={closeMenu}>Panel Admin</Link>
+//               )}
+
+//               {/* Info de usuario y logout */}
+//               <div className={stylesNavbar.mobileUserInfo}>
+//                 <div className={stylesNavbar.mobileUserAvatar}>
+//                   {user?.nombre?.charAt(0).toUpperCase() || "?"}
+//                 </div>
+//                 <div>
+//                   <div className={stylesNavbar.mobileUserName}>{user.nombre}</div>
+//                   <div className={stylesNavbar.mobileUserRole}>{user.rol}</div>
+//                 </div>
+//               </div>
+//               <button
+//                 onClick={() => {
+//                   logoutUser();
+//                   closeMenu();
+//                 }}
+//                 className={stylesNavbar.mobileBtnLogout}
+//               >
+//                 Cerrar Sesión
+//               </button>
+//             </>
+//           )}
+//         </div>
+
+//         {/* Overlay */}
+//         {isMenuOpen && <div className={stylesNavbar.overlay} onClick={closeMenu}></div>}
+//       </div>
+//     </nav>
+//   );
+// };
+
+// export default Navbar;
+
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -8,11 +179,20 @@ import { useUser } from "./userContext";
 const Navbar: React.FC = () => {
   const { user, logoutUser } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMounted, setReady] = useState(false); // evita hydration mismatch
+  const [isMounted, setReady] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setReady(true), 0);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -24,6 +204,10 @@ const Navbar: React.FC = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleLinkClick = () => {
+    closeMenu();
+  };
 
   if (!isMounted) {
     return (
@@ -40,10 +224,10 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className={stylesNavbar.navbar}>
+    <nav className={`${stylesNavbar.navbar} ${scrolled ? stylesNavbar.scrolled : ""}`}>
       <div className={stylesNavbar.navbarContainer}>
         {/* Logo */}
-        <Link href="/">
+        <Link href="/" onClick={handleLinkClick}>
           <div className={stylesNavbar.navbarLogo}>
             <img src="/assets/europadel2.jpg" alt="Logo" className={stylesNavbar.logoImage} />
           </div>
@@ -53,27 +237,40 @@ const Navbar: React.FC = () => {
         <div className={`${stylesNavbar.navbarMenu} ${stylesNavbar.desktopMenu}`}>
           {!user ? (
             <>
-              <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
-              <Link href="/login" className={stylesNavbar.navLink}>Login</Link>
-              <Link href="/productosall" className={stylesNavbar.navLink}>Productos</Link>
-              <Link href="/registro" className={`${stylesNavbar.navLink} ${stylesNavbar.btnRegister}`}>Registro</Link>
+              <Link href="/" className={stylesNavbar.navLink}>
+                <span className={stylesNavbar.linkText}>Inicio</span>
+              </Link>
+              <Link href="/productosall" className={stylesNavbar.navLink}>
+                <span className={stylesNavbar.linkText}>Productos</span>
+              </Link>
+              <Link href="/login" className={stylesNavbar.navLink}>
+                <span className={stylesNavbar.linkText}>Login</span>
+              </Link>
+              <Link href="/registro" className={`${stylesNavbar.navLink} ${stylesNavbar.btnRegister}`}>
+                <span className={stylesNavbar.linkText}>Registro</span>
+              </Link>
             </>
           ) : (
             <>
-              {/* Rutas para todos los usuarios logueados */}
-              <Link href="/productosall" className={stylesNavbar.navLink}>Productos</Link>
-              <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
-              {/* Rutas para vendedores y admins */}
-              {(user.rol === "vendedor") && (
-                <Link href="/crear-producto" className={stylesNavbar.navLink}>Crear Producto</Link>
+              <Link href="/" className={stylesNavbar.navLink}>
+                <span className={stylesNavbar.linkText}>Inicio</span>
+              </Link>
+              <Link href="/productosall" className={stylesNavbar.navLink}>
+                <span className={stylesNavbar.linkText}>Productos</span>
+              </Link>
+              
+              {user.rol === "vendedor" && (
+                <Link href="/crear-producto" className={stylesNavbar.navLink}>
+                  <span className={stylesNavbar.linkText}>Crear Producto</span>
+                </Link>
               )}
 
-              {/* Solo admin */}
               {user.rol === "admin" && (
-                <Link href="/paneladmin" className={stylesNavbar.navLink}>Panel Admin</Link>
+                <Link href="/paneladmin" className={stylesNavbar.navLink}>
+                  <span className={stylesNavbar.linkText}>Panel Admin</span>
+                </Link>
               )}
 
-              {/* Info de usuario y logout */}
               <div className={stylesNavbar.userMenu}>
                 <div className={stylesNavbar.userInfo}>
                   <div className={stylesNavbar.userAvatar}>
@@ -108,55 +305,73 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Menu */}
         <div className={`${stylesNavbar.mobileMenu} ${isMenuOpen ? stylesNavbar.active : ""}`}>
-          {!user ? (
-            <>
-              <Link href="/" className={stylesNavbar.navLink}>Inicio</Link>
-              <Link href="/login" className={stylesNavbar.mobileLink} onClick={closeMenu}>Login</Link>
-              <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={closeMenu}>Productos</Link>
-              <Link
-                href="/registro"
-                className={`${stylesNavbar.mobileLink} ${stylesNavbar.mobileLinkHighlight}`}
-                onClick={closeMenu}
-              >
-                Registro
-              </Link>
-            </>
-          ) : (
-            <>
-              {/* Todos los usuarios logueados */}
-              <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={closeMenu}>Productos</Link>
-
-              {/* Vendedores y admins */}
-              {(user.rol === "vendedor") && (
-                <Link href="/crear-producto" className={stylesNavbar.mobileLink} onClick={closeMenu}>Crear Producto</Link>
-              )}
-
-              {/* Solo admin */}
-              {user.rol === "admin" && (
-                <Link href="/paneladmin" className={stylesNavbar.mobileLink} onClick={closeMenu}>Panel Admin</Link>
-              )}
-
-              {/* Info de usuario y logout */}
-              <div className={stylesNavbar.mobileUserInfo}>
-                <div className={stylesNavbar.mobileUserAvatar}>
-                  {user?.nombre?.charAt(0).toUpperCase() || "?"}
+          <div className={stylesNavbar.mobileMenuContent}>
+            {!user ? (
+              <>
+                <Link href="/" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
+                  Inicio
+                </Link>
+                <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
+                  Productos
+                </Link>
+                <Link href="/login" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
+                  Login
+                </Link>
+                <Link
+                  href="/registro"
+                  className={`${stylesNavbar.mobileLink} ${stylesNavbar.mobileLinkHighlight}`}
+                  onClick={handleLinkClick}
+                >
+                  Registro
+                </Link>
+              </>
+            ) : (
+              <>
+                <div className={stylesNavbar.mobileUserHeader}>
+                  <div className={stylesNavbar.mobileUserAvatar}>
+                    {user?.nombre?.charAt(0).toUpperCase() || "?"}
+                  </div>
+                  <div>
+                    <div className={stylesNavbar.mobileUserName}>{user.nombre}</div>
+                    <div className={stylesNavbar.mobileUserRole}>{user.rol}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className={stylesNavbar.mobileUserName}>{user.nombre}</div>
-                  <div className={stylesNavbar.mobileUserRole}>{user.rol}</div>
-                </div>
-              </div>
-              <button
-                onClick={() => {
-                  logoutUser();
-                  closeMenu();
-                }}
-                className={stylesNavbar.mobileBtnLogout}
-              >
-                Cerrar Sesión
-              </button>
-            </>
-          )}
+
+                <div className={stylesNavbar.mobileDivider}></div>
+
+                <Link href="/" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
+                  Inicio
+                </Link>
+                <Link href="/productosall" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
+                  Productos
+                </Link>
+
+                {user.rol === "vendedor" && (
+                  <Link href="/crear-producto" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
+                    Crear Producto
+                  </Link>
+                )}
+
+                {user.rol === "admin" && (
+                  <Link href="/paneladmin" className={stylesNavbar.mobileLink} onClick={handleLinkClick}>
+                    Panel Admin
+                  </Link>
+                )}
+
+                <div className={stylesNavbar.mobileDivider}></div>
+
+                <button
+                  onClick={() => {
+                    logoutUser();
+                    closeMenu();
+                  }}
+                  className={stylesNavbar.mobileBtnLogout}
+                >
+                  Cerrar Sesión
+                </button>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Overlay */}
@@ -167,5 +382,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
-
