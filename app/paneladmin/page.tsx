@@ -492,7 +492,7 @@ export default function AdminProductosFijo() {
                                 required
                                 className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl outline-none focus:border-purple-500 transition text-sm text-gray-900"
                             >
-                                <option value="paleta">⚽ paleta</option>
+                                <option value="paleta">🎾 paleta</option>
                                 <option value="ropa">👕 Ropa</option>
                                 <option value="accesorio">🎒 Accesorio</option>
                             </select>
@@ -634,7 +634,7 @@ export default function AdminProductosFijo() {
                                 className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl outline-none focus:border-purple-500 transition text-sm text-gray-900"
                             >
                                 <option value="todos">Todas las categorías</option>
-                                <option value="paleta">⚽ paletas</option>
+                                <option value="paleta">🎾 paletas</option>
                                 <option value="ropa">👕 Ropa</option>
                                 <option value="accesorio">🎒 Accesorios</option>
                             </select>
@@ -972,4 +972,5 @@ export default function AdminProductosFijo() {
         </div>
     );
 }
+
 
