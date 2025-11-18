@@ -55,11 +55,11 @@ const Footer = () => {
             <h4 className={stylesFooter.sectionTitle}>Enlaces Rápidos</h4>
             <ul className={stylesFooter.linkList}>
               {[
-                { name: "Productos", href: "#productos" },
-                { name: "Ofertas", href: "#ofertas" },
-                { name: "Marcas", href: "#marcas" },
-                { name: "Blog", href: "#blog" },
-                { name: "Nosotros", href: "#nosotros" },
+                { name: "Productos", href: "productall" },
+                // { name: "Ofertas", href: "#ofertas" },
+                // { name: "Marcas", href: "#marcas" },
+                // { name: "Blog", href: "#blog" },
+                // { name: "Nosotros", href: "#nosotros" },
               ].map((link) => (
                 <li key={link.name} className={stylesFooter.linkItem}>
                   <a href={link.href}>
@@ -76,11 +76,11 @@ const Footer = () => {
             <h4 className={stylesFooter.sectionTitle}>Información</h4>
             <ul className={stylesFooter.linkList}>
               {[
-                { name: "Términos y Condiciones", href: "#terminos" },
-                { name: "Política de Envíos", href: "#envios" },
-                { name: "Devoluciones", href: "#devoluciones" },
-                { name: "Preguntas Frecuentes", href: "#faq" },
-                { name: "Métodos de Pago", href: "#pagos" },
+                { name: "Términos y Condiciones", href: "terminos" },
+                // { name: "Política de Envíos", href: "#envios" },
+                // { name: "Devoluciones", href: "#devoluciones" },
+                // { name: "Preguntas Frecuentes", href: "#faq" },
+                // { name: "Métodos de Pago", href: "#pagos" },
               ].map((link) => (
                 <li key={link.name} className={stylesFooter.linkItem}>
                   <a href={link.href}>
@@ -110,10 +110,10 @@ const Footer = () => {
                   <FaPhone />
                 </div>
                 <a
-                  href="tel:+5493462529718"
+                  href="tel:+34 602 65 72 38"
                   className={stylesFooter.contactLink}
                 >
-                  +54 9 3462 52-9718
+                 +34 602 65 72 38
                 </a>
               </li>
               <li className={stylesFooter.contactItem}>
@@ -220,3 +220,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
