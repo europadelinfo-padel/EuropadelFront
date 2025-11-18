@@ -1043,7 +1043,7 @@ export default function VendedorProductos() {
                                     className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-500 transition text-sm text-gray-900"
                                 >
                                     <option value="ARS">🇦🇷 ARS (Pesos)</option>
-                                    <option value="USD">🇺🇸 USD (Dólares)</option>
+                                    <option value="USD">🇪🇺 EUR (€ Euros)</option>
                                 </select>
                             </div>
 
@@ -1483,4 +1483,5 @@ export default function VendedorProductos() {
         </div>
     );
 }
+
 
