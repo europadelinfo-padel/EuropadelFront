@@ -307,7 +307,7 @@ export default function ProductosPage() {
                         {producto.marca}
                       </span>
                       <span className="text-2xl">
-                        {producto.categoria === 'paleta' && '⚽'}
+                        {producto.categoria === 'paleta' && '🎾'}
                         {producto.categoria === 'ropa' && '👕'}
                         {producto.categoria === 'accesorio' && '🎒'}
                       </span>
@@ -400,9 +400,9 @@ export default function ProductosPage() {
                 <p className="text-xl text-purple-600 font-bold mb-2">
                   {productoDetalle.marca}
                 </p>
-                <p className="text-sm text-gray-500 mb-6">
+                {/* <p className="text-sm text-gray-500 mb-6">
                   Código: {productoDetalle.codigo}
-                </p>
+                </p> */}
 
                 <div className="mb-6">
                   <h3 className="text-lg font-bold text-gray-800 mb-2">Descripción</h3>
@@ -455,4 +455,5 @@ export default function ProductosPage() {
     </div>
   );
 }
+
 
