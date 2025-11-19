@@ -1533,8 +1533,8 @@ import { useUser } from '../components/userContext';
 import { useRouter } from 'next/navigation';
 import GestionProductosPublicos from '../productosPublicos/page';
 
-const API_URL = 'https://padel-back-kohl.vercel.app/api/productos';
-const API_VENDEDOR = 'https://padel-back-kohl.vercel.app/api/productos-vendedor';
+const API_URL = 'https://europadel-back.vercel.app/api/productos';
+const API_VENDEDOR = 'https://europadel-back.vercel.app/api/productos-vendedor';
 
 interface ProductoForm {
     productoAdminId?: string;
@@ -1674,7 +1674,7 @@ export default function VendedorProductos() {
         }
 
         try {
-            const response = await fetch('https://padel-back-kohl.vercel.app/api/auth/login', {
+            const response = await fetch('https://europadel-back.vercel.app/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1880,7 +1880,7 @@ const sincronizarProductos = async (): Promise<void> => {
         }
 
         // ✅ Usar la URL base correcta (sin /productos)
-        const BASE_API = 'https://padel-back-kohl.vercel.app/api';
+        const BASE_API = 'https://europadel-back.vercel.app/api';
         
         const resSincronizar = await fetch(`${BASE_API}/productos-vendedor/sincronizar`, {
             method: 'POST',
