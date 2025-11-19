@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Trash2, RefreshCw, Eye, Package, DollarSign, AlertCircle, Store } from 'lucide-react';
 
-const API_PRODUCTOS_PUBLICOS = 'https://padel-back-kohl.vercel.app/api/productos-vendedor/publicos';
+const API_PRODUCTOS_PUBLICOS = 'https://europadel-back.vercel.app/api/productos-vendedor/publicos';
 // const API_PRODUCTOS_PUBLICOS = 'https://europadel-back.vercel.app/api/productos-vendedor/publicos';
 
 interface ProductoPublico {
